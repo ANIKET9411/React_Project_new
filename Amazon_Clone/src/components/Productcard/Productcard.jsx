@@ -34,7 +34,7 @@ function Productcard(props) {
   return (
     <>
       <div
-        className="w-1/5 m-5 text-center h-3/5 flex flex-col bg-zinc-400"
+        className="w-1/5 m-5 text-center h-3/5 flex flex-col"
         onClick={(e) => {
           e.stopPropagation();
           getproductdetails(props.value.asin);
