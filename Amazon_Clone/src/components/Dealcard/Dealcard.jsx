@@ -3,6 +3,7 @@ import { Mycontext } from "../../Context";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { toast } from "react-toastify";
 
 function Dealcard(props) {
   const navigate = useNavigate();
@@ -55,6 +56,8 @@ function Dealcard(props) {
               ? dispatch({ type: "ADD_TO_CART", payload: props.value })
               : navigate("/signin");
             console.log(props.value);
+
+            currentUser && toast.success("Successfully added to the cart");
           }}
           className="rounded-3xl mx-auto p-2 bg-yellow-400"
         >

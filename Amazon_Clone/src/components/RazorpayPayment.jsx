@@ -8,6 +8,7 @@ import {
   getDocs,
   getFirestore,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const RazorpayPayment = () => {
   const { sum, setOItem, cartItems, dispatch, setCartItems, uid } =
@@ -61,7 +62,10 @@ const RazorpayPayment = () => {
       image: "https://example.com/your_logo", // Replace with your logo URL or leave empty if not used
       handler: async function (response) {
         // Handle successful payment
-        alert(
+        // alert(
+        //   `Payment successful! Payment ID: ${response.razorpay_payment_id}`
+        // );
+        toast.success(
           `Payment successful! Payment ID: ${response.razorpay_payment_id}`
         );
         {
@@ -89,7 +93,8 @@ const RazorpayPayment = () => {
 
     const rzp1 = new window.Razorpay(options);
     rzp1.on("payment.failed", function (response) {
-      alert(`Payment failed! Reason: ${response.error.reason}`);
+      // alert(`Payment failed! Reason: ${response.error.reason}`);
+      toast.error(`Payment failed! Reason: ${response.error.reason}`);
     });
 
     rzp1.open();
