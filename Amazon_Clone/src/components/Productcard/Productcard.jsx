@@ -6,7 +6,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 function Productcard(props) {
   const { currentUser } = useAuth();
-  n;
+
   // console.log(props);
   const navigate = useNavigate();
   const { dispatch, setProdDetail } = useContext(Mycontext);
