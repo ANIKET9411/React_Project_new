@@ -2,22 +2,20 @@ import { Mycontext } from "../../Context";
 import Layout from "../../components/Layout/Layout";
 import { useContext, useState } from "react";
 import Productcard from "../../components/Productcard/Productcard";
-
 function Allproducts() {
   const [selectedval, setSelectedval] = useState();
   const { products, setProducts } = useContext(Mycontext);
-
+  console.log(products);
   return (
     <Layout>
       <div>
-        <div className="md:mr-28 md:flex md:justify-end mt-3">
+        <div className="mr-28 flex justify-end mt-3">
           <h1 className="font-semibold text-xl">Filter By:</h1>
           <select
             value={selectedval}
             onChange={(e) => {
               setSelectedval(e.target.value);
             }}
-            className="ml-2"
           >
             <option value="Featured">Featured</option>
             <option value="HighttoLow">High to low</option>
@@ -25,8 +23,8 @@ function Allproducts() {
           </select>
         </div>
         <div>
-          <h1 className="md:mx-40 font-bold text-3xl my-5">Search Result:</h1>
-          <div className="md:flex md:justify-between md:mx-40 md:flex-wrap">
+          <h1 className="mx-40 font-bold text-3xl my-5">Search Result:</h1>
+          <div className="flex justify-between mx-40 flex-wrap">
             {selectedval === "HighttoLow" &&
               setProducts(
                 products.sort((a, b) => {
@@ -54,5 +52,4 @@ function Allproducts() {
     </Layout>
   );
 }
-
 export default Allproducts;
