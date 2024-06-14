@@ -2,8 +2,12 @@ import { useContext } from "react";
 import { Mycontext } from "../../Context";
 import Layout from "../../components/Layout/Layout";
 import { CiStar } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 function Productdetails() {
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const { prodDetail, dispatch } = useContext(Mycontext);
   console.log(prodDetail);
   let keylist = Object.keys(prodDetail.product_details);
@@ -18,7 +22,9 @@ function Productdetails() {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              dispatch({ type: "ADD_TO_CART", payload: prodDetail });
+              currentUser
+                ? dispatch({ type: "ADD_TO_CART", payload: props.value })
+                : navigate("/signin");
             }}
             className="rounded-3xl mx-auto p-2 bg-yellow-400"
           >

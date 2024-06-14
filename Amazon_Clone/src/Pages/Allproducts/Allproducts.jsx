@@ -9,7 +9,7 @@ function Allproducts() {
   return (
     <Layout>
       <div>
-        <div>
+        <div className="mr-28 flex justify-end mt-3">
           <h1 className="font-semibold text-xl">Filter By:</h1>
           <select
             value={selectedval}
@@ -23,7 +23,7 @@ function Allproducts() {
           </select>
         </div>
         <div>
-          <h1 className="mx-32 font-bold text-3xl my-5">Search Result:</h1>
+          <h1 className="mx-40 font-bold text-3xl my-5">Search Result:</h1>
           <div className="flex justify-between mx-40 flex-wrap">
             {selectedval === "HighttoLow" &&
               setProducts(

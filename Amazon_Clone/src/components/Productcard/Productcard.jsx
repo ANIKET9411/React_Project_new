@@ -2,7 +2,9 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { Mycontext } from "../../Context";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 function Productcard(props) {
+  const { currentUser } = useAuth();
   // console.log(props);
   const navigate = useNavigate();
   const { dispatch, setProdDetail } = useContext(Mycontext);
@@ -16,7 +18,7 @@ function Productcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "f0810dbca3mshd094a9f09e099dep17fa06jsn2aee572d9e6e",
+        "x-rapidapi-key": "62369b9b01msh1fae9fbb28b49f0p10173djsn5c13a3a285ae",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -34,7 +36,7 @@ function Productcard(props) {
   return (
     <>
       <div
-        className="w-1/5 m-5 text-center h-3/5 flex flex-col"
+        className="w-1/4 m-3 text-center h-3/5 flex flex-col shadow-xl p-3 px-3"
         onClick={(e) => {
           e.stopPropagation();
           getproductdetails(props.value.asin);
@@ -47,9 +49,11 @@ function Productcard(props) {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            dispatch({ type: "ADD_TO_CART", payload: props.value });
+            currentUser
+              ? dispatch({ type: "ADD_TO_CART", payload: props.value })
+              : navigate("/signin");
           }}
-          className="rounded-3xl mx-auto p-2 bg-yellow-400"
+          className="rounded-3xl mx-auto p-2 bg-yellow-400 mt-3"
         >
           ADD TO CART
         </button>

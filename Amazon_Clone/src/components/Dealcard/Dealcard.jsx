@@ -17,7 +17,7 @@ function Dealcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "f0810dbca3mshd094a9f09e099dep17fa06jsn2aee572d9e6e",
+        "x-rapidapi-key": "62369b9b01msh1fae9fbb28b49f0p10173djsn5c13a3a285ae",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -36,7 +36,7 @@ function Dealcard(props) {
   // console.log(props.value);
   return (
     <div
-      className="w-1/5 m-5 text-center flex flex-col p-7"
+      className="w-1/5 m-5 text-center flex flex-col p-7 shadow-xl"
       onClick={(e) => {
         e.stopPropagation();
         getproductdetails(props.value.product_asin);
@@ -51,11 +51,9 @@ function Dealcard(props) {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            // if (uid !== "") {
-            dispatch({ type: "ADD_TO_CART", payload: props.value });
-            // } else {
-            // navigate("/signin");
-            // }
+            currentUser
+              ? dispatch({ type: "ADD_TO_CART", payload: props.value })
+              : navigate("/signin");
             console.log(props.value);
           }}
           className="rounded-3xl mx-auto p-2 bg-yellow-400"
