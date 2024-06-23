@@ -7,11 +7,13 @@ import Home_carousels from "../../components/Home_carousels/Home_carousels";
 import app from "../../firebase";
 import { getAuth } from "firebase/auth";
 import Productcard from "../../components/Productcard/Productcard";
+import { RotatingLines } from "react-loader-spinner";
 const auth = getAuth(app);
 console.log(auth.currentUser?.uid);
+
 function Home() {
   const { deals, setDeals, user, uid, products } = useContext(Mycontext);
-
+  const [loading, setLoading] = useState(false);
   async function getdeals() {
     const options = {
       method: "GET",
@@ -24,41 +26,22 @@ function Home() {
         discount_range: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "62369b9b01msh1fae9fbb28b49f0p10173djsn5c13a3a285ae",
+        "x-rapidapi-key": "da8063c0b4msh48c8e57b79b4091p1369fbjsneab5a009a71f",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
 
     try {
+      setLoading(true);
       const response = await axios.request(options);
       // console.log(response.data);
       setDeals(response.data.data.deals);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
   }
-  // async function getbestSeller() {
-  //   const options = {
-  //     method: "GET",
-  //     url: "https://real-time-amazon-data.p.rapidapi.com/deal-products",
-  //     params: {
-  //       country: "US",
-  //       sort_by: "FEATURED",
-  //       page: "1",
-  //     },
-  //     headers: {
-  //       "x-rapidapi-key": "06ab6a2135msh882d4c349d7a1f0p1350f6jsn2f8c8ae7ec1c",
-  //       "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
-  //     },
-  //   };
 
-  //   try {
-  //     const response = await axios.request(options);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
   useEffect(() => {
     getdeals();
     // getbestSeller();
@@ -83,6 +66,24 @@ function Home() {
             return <Dealcard key={index} value={deal} />;
           })}
         </div>
+      </div>
+      <div
+        className="flex
+       justify-center items-center py-20"
+      >
+        {loading && (
+          <RotatingLines
+            visible={true}
+            height="96"
+            width="96"
+            color="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            ariaLabel="rotating-lines-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        )}
       </div>
     </Layout>
   );

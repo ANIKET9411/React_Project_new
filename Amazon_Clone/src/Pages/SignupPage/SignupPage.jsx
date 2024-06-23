@@ -25,7 +25,7 @@ function SignupPage() {
     setuid(currentUser?.uid);
   }, []);
   const handleSignUp = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -33,10 +33,10 @@ function SignupPage() {
         email,
         password
       );
-      setUser(userCredential.user);
+
+      navigate("/");
       console.log("User signed up:", userCredential.user);
       setuid(currentUser.uid);
-      navigate("/");
     } catch (error) {
       console.error("Error signing up:", error);
     }
@@ -44,17 +44,16 @@ function SignupPage() {
 
   const handleSignIn = async (e) => {
     try {
-      // e.preventDefault();
+      e.preventDefault();
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-      // setUser(userCredential.user);
+      navigate("/");
       console.log("User signed in:", userCredential.user.uid);
       setuid(currentUser.uid);
       dispatch({ type: "reset" });
-      navigate("/");
     } catch (error) {
       console.error("Error signing in:", error);
     }

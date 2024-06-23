@@ -9,7 +9,6 @@ import axios from "axios";
 import { Mycontext } from "../../Context";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
-import SignOut from "../SignOut/SignOut";
 
 const Header = () => {
   const { currentUser } = useAuth();
@@ -35,7 +34,7 @@ const Header = () => {
         product_condition: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "62369b9b01msh1fae9fbb28b49f0p10173djsn5c13a3a285ae",
+        "x-rapidapi-key": "da8063c0b4msh48c8e57b79b4091p1369fbjsneab5a009a71f",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };

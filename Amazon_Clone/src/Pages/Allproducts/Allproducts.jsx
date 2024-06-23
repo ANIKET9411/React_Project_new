@@ -2,6 +2,8 @@ import { Mycontext } from "../../Context";
 import Layout from "../../components/Layout/Layout";
 import { useContext, useState } from "react";
 import Productcard from "../../components/Productcard/Productcard";
+import { RotatingLines } from "react-loader-spinner";
+
 function Allproducts() {
   const [selectedval, setSelectedval] = useState();
   const { products, setProducts } = useContext(Mycontext);
@@ -24,6 +26,7 @@ function Allproducts() {
         </div>
         <div>
           <h1 className="mx-40 font-bold text-3xl my-5">Search Result:</h1>
+          
           <div className="flex justify-between mx-40 flex-wrap">
             {selectedval === "HighttoLow" &&
               setProducts(

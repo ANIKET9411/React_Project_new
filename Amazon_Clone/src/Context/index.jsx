@@ -12,16 +12,17 @@ import {
 export const Mycontext = createContext();
 function Context(props) {
   const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [sum, setSum] = useState();
   const [prodDetail, setProdDetail] = useState();
   const [Oitem, setOItem] = useState(null);
   const [tItems, settItems] = useState();
-  const [user, setUser] = useState(null);
+
   const [uid, setuid] = useState("");
   function reducerfn(state, action) {
     switch (action.type) {
       case "ADD_TO_CART": {
-        // console.log(state);
+        console.log(state);
         return {
           ...state,
           cart_products: [
@@ -34,8 +35,9 @@ function Context(props) {
         console.log(action.payload);
         let updatedlist = state.cart_products.map((item) => {
           if (
-            item.cart_item.deal_title === action.payload ||
-            item.cart_item.product_title === action.payload
+            (item.cart_item.deal_title === action.payload ||
+              item.cart_item.product_title === action.payload) &&
+            item.Q > 1
           ) {
             item.Q = item.Q - 1;
           }
@@ -46,24 +48,33 @@ function Context(props) {
       }
       case "INCREMENT_QTY": {
         console.log(action.payload, "again");
-        let updatedlist = state.cart_products.map((item) => {
-          if (
-            item.cart_item.deal_title === action.payload ||
-            item.cart_item.product_title === action.payload
-          ) {
-            console.log("Aniket");
-            item.Q = item.Q + 1;
-          }
-          return item;
+
+        let updatedlist = cartItems?.map((item) => {
+          return item?.cart_products.map((prod) => {
+            console.log(prod);
+            if (
+              prod.cart_item.deal_title === action.payload ||
+              prod.cart_item.product_title === action.payload
+            ) {
+              console.log("Aniket");
+              prod.Q = prod.Q + 1;
+            }
+            return prod;
+          });
         });
+        setCartItems(updatedlist);
+
         console.log(updatedlist);
-        return { ...state, cart_products: updatedlist };
+        return { cart_products: updatedlist };
       }
       case "reset": {
         console.log("reset");
         return {
           cart_products: [],
         };
+      }
+      case "DATA_FIRESTORE": {
+        return { cart_products: action.payload };
       }
       // case "DATA_FIRESTORE": {
       //   return {
@@ -111,18 +122,25 @@ function Context(props) {
   useEffect(() => {
     const handleUserData = async () => {
       console.log(state);
-      setCartItems(...cartItems, state);
       if (uid) {
+        setCartItems((prev) => {
+          console.log(prev);
+          return [...prev, state];
+        });
+        let updata = [...cartItems, state];
         await deleteUserCollection(uid);
-        await storeUserData(uid, state);
+        await storeUserData(uid, { updata });
+        // setCartItems(state)
+
+        dispatch({ type: "reset" });
       }
     };
     if (uid && state.cart_products.length !== 0) {
       handleUserData();
+      console.log(state);
     }
-  }, [state]);
+  }, [state, uid]);
   const [deals, setDeals] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
   return (
     <Mycontext.Provider
       value={{
@@ -136,8 +154,6 @@ function Context(props) {
         setProdDetail,
         uid,
         setuid,
-        user,
-        setUser,
         cartItems,
         setCartItems,
         sum,

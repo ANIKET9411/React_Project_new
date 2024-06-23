@@ -18,7 +18,7 @@ function Dealcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "62369b9b01msh1fae9fbb28b49f0p10173djsn5c13a3a285ae",
+        "x-rapidapi-key": "da8063c0b4msh48c8e57b79b4091p1369fbjsneab5a009a71f",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -46,7 +46,7 @@ function Dealcard(props) {
       <img src={props.value?.deal_photo} alt="" className="h-48" />
       <h1></h1>
       <p>{props.value?.deal_title}</p>
-      <h2 className="font-bold text-2xl">${props.value?.deal_price.amount}</h2>
+      <h2 className="font-bold text-2xl">${props.value?.deal_price?.amount}</h2>
 
       <div className="flex justify-between mt-8">
         <button
