@@ -11,8 +11,7 @@ import {
 import { toast } from "react-toastify";
 
 const RazorpayPayment = () => {
-  const { sum, setOItem, cartItems, dispatch, setCartItems, uid } =
-    useContext(Mycontext);
+  const { sum, setOItem, cartItems, dispatch, uid } = useContext(Mycontext);
   async function deleteUserCollection(uid, str) {
     try {
       // Create a reference to the user's collection
@@ -73,7 +72,7 @@ const RazorpayPayment = () => {
           await deleteUserCollection(uid, "cartdata");
           await storeUserData(uid, cartItems);
           await deleteUserCollection(uid, "orderdata");
-          dispatch({ type: "reset" });
+          // dispatch({ type: "reset" });
         }
 
         // You can also make a call to your backend to validate the payment and store payment details

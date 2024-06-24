@@ -7,14 +7,20 @@ import { toast } from "react-toastify";
 import { RotatingLines } from "react-loader-spinner";
 
 function Productcard(props) {
-  const [loading, setLoading] = useState(false);
   const { currentUser } = useAuth();
 
   // console.log(props);
   const navigate = useNavigate();
-  const { dispatch, setProdDetail } = useContext(Mycontext);
+  const {
+    dispatch,
+    setProdDetail,
+    cartItems,
+    setCartItems,
+    loading,
+    setLoading,
+  } = useContext(Mycontext);
 
-  async function getproductdetails(id) {
+  async function getproductdetails(id, str = "add") {
     const options = {
       method: "GET",
       url: "https://real-time-amazon-data.p.rapidapi.com/product-details",
@@ -23,32 +29,56 @@ function Productcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "da8063c0b4msh48c8e57b79b4091p1369fbjsneab5a009a71f",
+        "x-rapidapi-key": "9cad704f23mshc671070439c9840p194925jsn63e13027751e",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
 
     try {
-      setLoading(true);
+      console.log(str);
+      str === "prod_detail" && setLoading(true);
       console.log(id);
       const response = await axios.request(options);
       console.log(response.data);
-      setProdDetail(response.data.data);
-      setLoading(false);
+      if (str === "add") {
+        return response.data.data;
+      }
+      str === "prod_detail" && setProdDetail(response.data.data);
+
+      str === "prod_detail" && setLoading(false);
     } catch (error) {
-      setLoading(false);
+      str === "prod_detail" && setLoading(false);
       console.error(error);
     }
-    navigate("/productdetails");
+    str === "prod_detail" && navigate("/productdetails");
+  }
+  async function ADDTOCART(data) {
+    let newdata = await getproductdetails(data.asin);
+    console.log(newdata);
+    let match = false;
+    if (cartItems?.length >= 1) {
+      cartItems.map((ci) => {
+        if (ci.newdata.product_title === newdata.product_title) {
+          match = true;
+        }
+      });
+      !match &&
+        setCartItems((prev) => {
+          return [...prev, { newdata, Q: 1 }];
+        });
+    } else {
+      setCartItems([{ newdata, Q: 1 }]);
+      console.log("first");
+    }
   }
   return (
     <>
-      {!loading && (
+      {
         <div
           className="w-1/4 m-3 text-center h-3/5 flex flex-col shadow-xl p-3 px-3"
           onClick={(e) => {
             e.stopPropagation();
-            getproductdetails(props.value.asin);
+            getproductdetails(props.value.asin, "prod_detail");
           }}
         >
           <img src={props.value.product_photo} alt="" className="h-48" />
@@ -59,8 +89,9 @@ function Productcard(props) {
             onClick={(e) => {
               e.stopPropagation();
               currentUser
-                ? dispatch({ type: "ADD_TO_CART", payload: props.value })
-                : navigate("/signin");
+                ? ADDTOCART(props.value, "prod_detail")
+                : // dispatch({ type: "ADD_TO_CART", payload: props.value })
+                  navigate("/signin");
               toast.success("Successfully added to the cart");
             }}
             className="rounded-3xl mx-auto p-2 bg-yellow-400 mt-3"
@@ -68,20 +99,7 @@ function Productcard(props) {
             ADD TO CART
           </button>
         </div>
-      )}
-      {loading && (
-        <RotatingLines
-          visible={true}
-          height="96"
-          width="96"
-          color="grey"
-          strokeWidth="5"
-          animationDuration="0.75"
-          ariaLabel="rotating-lines-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-      )}
+      }
     </>
   );
 }

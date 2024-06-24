@@ -6,7 +6,7 @@ import { RotatingLines } from "react-loader-spinner";
 
 function Allproducts() {
   const [selectedval, setSelectedval] = useState();
-  const { products, setProducts } = useContext(Mycontext);
+  const { products, setProducts, loading } = useContext(Mycontext);
   console.log(products);
   return (
     <Layout>
@@ -25,31 +25,50 @@ function Allproducts() {
           </select>
         </div>
         <div>
-          <h1 className="mx-40 font-bold text-3xl my-5">Search Result:</h1>
-          
-          <div className="flex justify-between mx-40 flex-wrap">
-            {selectedval === "HighttoLow" &&
-              setProducts(
-                products.sort((a, b) => {
-                  return (
-                    parseInt(b.product_price.replace(/[^0-9.]/g, "")) -
-                    parseInt(a.product_price.replace(/[^0-9.]/g, ""))
-                  );
-                })
-              )}
-            {selectedval === "LowtoHigh" &&
-              setProducts(
-                products.sort((a, b) => {
-                  return (
-                    parseInt(a.product_price.replace(/[^0-9.]/g, "")) -
-                    parseInt(b.product_price.replace(/[^0-9.]/g, ""))
-                  );
-                })
-              )}
-            {products.map((product) => {
-              return <Productcard key={product.asin} value={product} />;
-            })}
-          </div>
+          {!loading && (
+            <>
+              {" "}
+              <h1 className="mx-40 font-bold text-3xl my-5">Search Result:</h1>
+              <div className="flex justify-between mx-40 flex-wrap">
+                {selectedval === "HighttoLow" &&
+                  setProducts(
+                    products.sort((a, b) => {
+                      return (
+                        parseInt(b.product_price.replace(/[^0-9.]/g, "")) -
+                        parseInt(a.product_price.replace(/[^0-9.]/g, ""))
+                      );
+                    })
+                  )}
+                {selectedval === "LowtoHigh" &&
+                  setProducts(
+                    products.sort((a, b) => {
+                      return (
+                        parseInt(a.product_price.replace(/[^0-9.]/g, "")) -
+                        parseInt(b.product_price.replace(/[^0-9.]/g, ""))
+                      );
+                    })
+                  )}
+                {products.map((product) => {
+                  return <Productcard key={product.asin} value={product} />;
+                })}
+              </div>
+            </>
+          )}
+          {loading && (
+            <div className="flex justify-center w-full p-20 h-72">
+              <RotatingLines
+                visible={true}
+                height="96"
+                width="96"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          )}
         </div>
       </div>
     </Layout>

@@ -3,34 +3,23 @@ import { Mycontext } from "../../Context";
 import Cartcard from "../../components/Cartcard/Cartcard";
 import Layout from "../../components/Layout/Layout";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { getMultipleDocs } from "../../Api";
 import RazorpayPayment from "../../components/RazorpayPayment";
 
 function Cart() {
-  const navigate = useNavigate();
-  const { state, uid, cartItems, setCartItems, setSum, sum, dispatch, tItems } =
+  const { uid, cartItems, setCartItems, setSum, sum, tItems } =
     useContext(Mycontext);
-  console.log(tItems);
-  const getMultipleDocs = async (uid, state) => {
-    const db = getFirestore();
-    const querySnapshot = await getDocs(
-      collection(db, `cartdata/${uid}/userData`)
-    );
-    let cartlist = querySnapshot.docs.map((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      return doc.data();
-    });
-    console.log(cartlist[0]?.updata);
-    setCartItems(cartlist[0]?.updata);
-    // dispatch({ type: "DATA_FIRESTORE", payload: cartlist });
-  };
+  // console.log(tItems);
 
   useEffect(() => {
-    if (uid && state) {
-      getMultipleDocs(uid, state);
+    if (uid) {
+      getMultipleDocs(uid).then((data) => {
+        console.log(data);
+        setCartItems(data);
+      });
       console.log("rerun");
     }
-  }, [state, uid]);
+  }, [uid]);
 
   return (
     <Layout>
@@ -42,12 +31,12 @@ function Cart() {
             <div>
               <h1 className="text-2xl mx-8 mb-4 font-bold">Product details</h1>
               {cartItems?.map((item, index) => {
-                // console.log(item);
-                return item?.cart_products?.map((prod) => {
-                  console.log(prod);
-                  // console.log()
-                  return <Cartcard key={index} val={prod} />;
-                });
+                console.log(item);
+                // return item?.cart_products?.map((prod) => {
+                //   console.log(prod);
+                // console.log()
+                return <Cartcard key={index} val={item} />;
+                // });
               })}
             </div>
           ) : (
@@ -57,7 +46,7 @@ function Cart() {
           )}
         </div>
 
-        {/* {state?.cart_products?.length > 0 && (
+        {cartItems?.length > 0 && (
           <div className="m-16 p-2 border-black border-solid border-4 w-60 h-40">
             <h1 className="font-semibold text-xl">
               Price details({tItems} items)
@@ -65,7 +54,7 @@ function Cart() {
             <h1 className="font-extrabold">Total Price: INR {sum}</h1>
             <RazorpayPayment />
           </div>
-        )} */}
+        )}
       </div>
     </Layout>
   );

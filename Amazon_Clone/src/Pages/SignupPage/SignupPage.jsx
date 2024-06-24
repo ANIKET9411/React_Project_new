@@ -12,14 +12,14 @@ import { auth } from "../../Config";
 import Header from "../../components/Header/Header";
 
 function SignupPage() {
-  const { setuid, dispatch, user, setUser } = useContext(Mycontext);
+  const { setuid, dispatch } = useContext(Mycontext);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignin, setIsSignin] = useState(true);
   const [title, setTitle] = useState("Signin");
-  // const [user, setUser] = useState(null);
+
   const { currentUser } = useAuth();
   useEffect(() => {
     setuid(currentUser?.uid);
@@ -63,7 +63,7 @@ function SignupPage() {
     e.preventDefault();
     try {
       await signOut(auth);
-      setUser(null);
+
       setuid();
       console.log("User signed out");
     } catch (error) {
@@ -89,7 +89,6 @@ function SignupPage() {
       {!currentUser && (
         <>
           <div className="px-8 py-10 border-zinc-500 border-solid border-2 w-1/4 mx-auto">
-            {console.log(user)}
             <h1 className="text-2xl font-bold">{title}</h1>
             <input
               className="w-full h-8 px-3 py-6  border-zinc-500 border-solid border-2 my-6"

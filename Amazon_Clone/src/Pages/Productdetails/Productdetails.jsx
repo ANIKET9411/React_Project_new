@@ -4,16 +4,38 @@ import Layout from "../../components/Layout/Layout";
 import { CiStar } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { toast } from "react-toastify";
 
 function Productdetails() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const { prodDetail, dispatch } = useContext(Mycontext);
+  const { prodDetail, dispatch, cartItems, setCartItems } =
+    useContext(Mycontext);
   console.log(prodDetail);
   let keylist = Object.keys(prodDetail.product_details);
   console.log(keylist);
   let ratinglist = Object.keys(prodDetail.rating_distribution);
   console.log(ratinglist);
+
+  function ADDTOCART(newdata) {
+    console.log(newdata);
+    let match = false;
+    if (cartItems?.length >= 1) {
+      cartItems.map((ci) => {
+        if (ci.newdata.product_title === newdata.product_title) {
+          match = true;
+        }
+      });
+      !match &&
+        setCartItems((prev) => {
+          return [...prev, { newdata, Q: 1 }];
+        });
+    } else {
+      setCartItems([{ newdata, Q: 1 }]);
+      console.log("first");
+    }
+  }
+
   return (
     <Layout>
       <div className="flex mx-36 my-20">
@@ -23,8 +45,10 @@ function Productdetails() {
             onClick={(e) => {
               e.stopPropagation();
               currentUser
-                ? dispatch({ type: "ADD_TO_CART", payload: props.value })
-                : navigate("/signin");
+                ? ADDTOCART(prodDetail)
+                : // dispatch({ type: "ADD_TO_CART", payload: props.value })
+                  navigate("/signin");
+              toast.success("Successfully added to the cart");
             }}
             className="rounded-3xl mx-auto p-2 bg-yellow-400"
           >

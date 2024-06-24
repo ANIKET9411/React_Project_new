@@ -15,7 +15,7 @@ const Header = () => {
   console.log(currentUser);
   const navigate = useNavigate();
   const [searchval, setSearchval] = useState();
-  const { setProducts, state, setuid } = useContext(Mycontext);
+  const { setProducts, state, setuid, cartItems } = useContext(Mycontext);
   // useEffect(() => {
   //   setuid(currentUser.uid);
   // }, []);
@@ -34,7 +34,7 @@ const Header = () => {
         product_condition: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "da8063c0b4msh48c8e57b79b4091p1369fbjsneab5a009a71f",
+        "x-rapidapi-key": "9cad704f23mshc671070439c9840p194925jsn63e13027751e",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -98,32 +98,22 @@ const Header = () => {
           </Link>
         </section>
         <section className=" px-2 h-[80%] flex flex-col item-start justify-center border border-transparent text-white hover:border-white cursor-pointer duration-100 ">
-          <Link to="/order">
+          <Link to={currentUser ? "/order" : "signin"}>
             <p className="text-xs">Returns</p>
             <p className="text-sm -mt-1 font-bold">& Orders</p>
           </Link>
         </section>
         <section className="  px-3 py-1 h-[60%]   text-white flex items-start justify-center  border border-transparent hover:border-white cursor-pointer duration-100 relative">
-          <Link to="/cart">
+          <Link to={currentUser ? "/cart" : "signin"}>
             <FaCartShopping />
             <p className="text-xs font-semibold mt-3 ">
               Cart{" "}
               <span className="absolute text-xs -top-2 left-2 font-semibold p-1 h-4 bg-[#F0A647] flex items-center justify-center rounded-full">
-                {state.cart_products.length}
+                {cartItems.length}
               </span>
             </p>
           </Link>
         </section>
-        {/* <section>
-          {currentUser ? (
-            <>
-              <h1>Welcome, {currentUser.email}</h1>
-              <SignOut />
-            </>
-          ) : (
-            ""
-          )}
-        </section> */}
       </div>
       <section className="flex justify-between  bg-[#232f3e] text-white font-bold">
         <p

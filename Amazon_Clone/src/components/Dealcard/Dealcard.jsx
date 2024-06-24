@@ -8,8 +8,9 @@ import { toast } from "react-toastify";
 function Dealcard(props) {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
-  const { dispatch, setProdDetail, uid } = useContext(Mycontext);
-  async function getproductdetails(id) {
+  const { dispatch, setProdDetail, uid, setCartItems, cartItems, setLoading } =
+    useContext(Mycontext);
+  async function getproductdetails(id, str = "add") {
     const options = {
       method: "GET",
       url: "https://real-time-amazon-data.p.rapidapi.com/product-details",
@@ -18,29 +19,59 @@ function Dealcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "da8063c0b4msh48c8e57b79b4091p1369fbjsneab5a009a71f",
+        "x-rapidapi-key": "9cad704f23mshc671070439c9840p194925jsn63e13027751e",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
 
     try {
+      str === "prod_detail" && setLoading(true);
       console.log(id);
       const response = await axios.request(options);
       console.log(response.data);
-      setProdDetail(response.data.data);
+      if (str === "add") {
+        return response.data.data;
+      }
+      str === "prod_detail" && setProdDetail(response.data.data);
+      str === "prod_detail" && setLoading(false);
     } catch (error) {
+      str === "prod_detail" && setLoading(false);
       console.error(error);
     }
-    navigate("/productdetails");
+    str === "prod_detail" && navigate("/productdetails");
   }
 
-  // console.log(props.value);
+  async function ADDTOCART(data) {
+    let newdata = await getproductdetails(data.product_asin);
+    console.log(newdata);
+
+    // console.log(ci.newdata.product_title);
+
+    console.log("aniket");
+    let match = false;
+    if (cartItems?.length >= 1) {
+      cartItems.map((ci) => {
+        if (ci.newdata.product_title === newdata.product_title) {
+          match = true;
+        }
+      });
+      !match &&
+        setCartItems((prev) => {
+          return [...prev, { newdata, Q: 1 }];
+        });
+    } else {
+      setCartItems([{ newdata, Q: 1 }]);
+      console.log("first");
+    }
+  }
+
+  console.log(cartItems);
   return (
     <div
       className="w-1/5 m-5 text-center flex flex-col p-7 shadow-xl"
       onClick={(e) => {
         e.stopPropagation();
-        getproductdetails(props.value.product_asin);
+        getproductdetails(props.value.product_asin, "prod_detail");
       }}
     >
       <img src={props.value?.deal_photo} alt="" className="h-48" />
@@ -53,8 +84,9 @@ function Dealcard(props) {
           onClick={(e) => {
             e.stopPropagation();
             currentUser
-              ? dispatch({ type: "ADD_TO_CART", payload: props.value })
-              : navigate("/signin");
+              ? ADDTOCART(props.value)
+              : // dispatch({ type: "ADD_TO_CART", payload: props.value })
+                navigate("/signin");
             console.log(props.value);
 
             currentUser && toast.success("Successfully added to the cart");

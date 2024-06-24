@@ -10,10 +10,13 @@ import Productcard from "../../components/Productcard/Productcard";
 import { RotatingLines } from "react-loader-spinner";
 const auth = getAuth(app);
 console.log(auth.currentUser?.uid);
+import React from "react";
+import { getMultipleDocs } from "../../Api";
 
 function Home() {
-  const { deals, setDeals, user, uid, products } = useContext(Mycontext);
-  const [loading, setLoading] = useState(false);
+  const { deals, setDeals, uid, products, setCartItems, loading, setLoading } =
+    useContext(Mycontext);
+
   async function getdeals() {
     const options = {
       method: "GET",
@@ -26,7 +29,7 @@ function Home() {
         discount_range: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "da8063c0b4msh48c8e57b79b4091p1369fbjsneab5a009a71f",
+        "x-rapidapi-key": "9cad704f23mshc671070439c9840p194925jsn63e13027751e",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -38,6 +41,7 @@ function Home() {
       setDeals(response.data.data.deals);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   }
@@ -45,31 +49,40 @@ function Home() {
   useEffect(() => {
     getdeals();
     // getbestSeller();
-    console.log(user);
-  }, [user]);
+    getMultipleDocs(uid).then((data) => {
+      console.log(data);
+      setCartItems(data);
+    });
+  }, [uid]);
   return (
     <Layout>
       <Home_carousels />
-      <h1 className="font-bold text-3xl mx-20 my-10">Products For You</h1>
-      <div className="flex mx-10">
-        <div className="flex justify-between flex-wrap">
-          {deals.map((deal, index) => {
-            // console.log(deal);
-            <div>
-              <h1 className="mx-32 font-bold text-3xl my-5">Search Result:</h1>
-              <div className="flex justify-between mx-40 flex-wrap">
-                {products.map((product) => {
-                  return <Productcard key={product.asin} value={product} />;
-                })}
-              </div>
-            </div>;
-            return <Dealcard key={index} value={deal} />;
-          })}
-        </div>
-      </div>
+      {!loading && (
+        <>
+          <h1 className="font-bold text-3xl mx-20 my-10">Products For You</h1>
+          <div className="flex mx-10">
+            <div className="flex justify-between flex-wrap">
+              {deals.map((deal, index) => {
+                // console.log(deal);
+                <div>
+                  <h1 className="mx-32 font-bold text-3xl my-5">
+                    Search Result:
+                  </h1>
+                  <div className="flex justify-between mx-40 flex-wrap">
+                    {products.map((product) => {
+                      return <Productcard key={product.asin} value={product} />;
+                    })}
+                  </div>
+                </div>;
+                return <Dealcard key={index} value={deal} />;
+              })}
+            </div>
+          </div>
+        </>
+      )}
       <div
         className="flex
-       justify-center items-center py-20"
+       justify-center items-center p-20"
       >
         {loading && (
           <RotatingLines
@@ -88,4 +101,4 @@ function Home() {
     </Layout>
   );
 }
-export default Home;
+export default React.memo(Home);

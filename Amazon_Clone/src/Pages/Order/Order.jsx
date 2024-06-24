@@ -48,45 +48,38 @@ function Order() {
             // Oitem[0]?.cart_products?.map((item) => {
             Oitem.map((item) => {
               console.log(item);
-              console.log(item.Odata);
-              return item.Odata.data.map((it) => {
-                console.log(it);
-                return it.cart_products.map((clist) => {
-                  console.log(clist);
+              console.log(item.Odata?.data[0].newdata);
+              // return item.map((it) => {
+              // console.log(it);
+              // return it.cart_products.map((clist) => {
+              let value = item.Odata?.data[0].newdata;
 
-                  return (
-                    <div
-                      className="flex items-center justify-center border-black border-solid border-4 mx-auto my-3 w-5/6"
-                      key={clist.cart_item?.product_title}
-                    >
-                      {/* {item?.cart_item?.product_title} */}
+              return (
+                <div
+                  className="flex items-center justify-center border-black border-solid border-4 mx-auto my-3 w-5/6"
+                  key={value?.product_title}
+                >
+                  {/* {item?.cart_item?.product_title} */}
 
-                      <img
-                        className="m-3"
-                        src={
-                          clist.cart_item.deal_photo ??
-                          clist.cart_item?.product_photo
-                        }
-                        width={150}
-                        height={100}
-                      />
-                      <div className="w-1/2 m-3">
-                        <h1>
-                          {clist.cart_item?.deal_title ??
-                            clist.cart_item?.product_title}
-                        </h1>
-                        <div className="flex w-1/5 justify-between m-6">
-                          <h2>Qty:{clist.Q}</h2>
-                        </div>
-                      </div>
-                      <div className="text-2xl font-bold">
-                        {clist.cart_item?.product_price ??
-                          "$" + clist.cart_item?.deal_price.amount}
-                      </div>
+                  <img
+                    className="m-3"
+                    src={value?.product_photo}
+                    width={150}
+                    height={100}
+                  />
+                  <div className="w-1/2 m-3">
+                    <h1>{value?.product_title}</h1>
+                    <div className="flex w-1/5 justify-between m-6">
+                      <h2>Qty:{item.Odata?.data[0].Q}</h2>
                     </div>
-                  );
-                });
-              });
+                  </div>
+                  <div className="text-2xl font-bold">
+                    Rs.{value?.product_price * item.Odata?.data[0].Q * 81}
+                  </div>
+                </div>
+              );
+              // });
+              // });
             })
           // Oitem.map((OI) => {
           //   OI.Odata.data[0].cart_products.map((item) => {

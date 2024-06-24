@@ -17,76 +17,77 @@ function Context(props) {
   const [prodDetail, setProdDetail] = useState();
   const [Oitem, setOItem] = useState(null);
   const [tItems, settItems] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [uid, setuid] = useState("");
-  function reducerfn(state, action) {
-    switch (action.type) {
-      case "ADD_TO_CART": {
-        console.log(state);
-        return {
-          ...state,
-          cart_products: [
-            ...state.cart_products,
-            { cart_item: action.payload, Q: 1 },
-          ],
-        };
-      }
-      case "DECREMENT_QTY": {
-        console.log(action.payload);
-        let updatedlist = state.cart_products.map((item) => {
-          if (
-            (item.cart_item.deal_title === action.payload ||
-              item.cart_item.product_title === action.payload) &&
-            item.Q > 1
-          ) {
-            item.Q = item.Q - 1;
-          }
-          return item;
-        });
+  // function reducerfn(state, action) {
+  //   switch (action.type) {
+  //     case "ADD_TO_CART": {
+  //       console.log(state);
+  //       return {
+  //         ...state,
+  //         cart_products: [
+  //           ...state.cart_products,
+  //           { cart_item: action.payload, Q: 1 },
+  //         ],
+  //       };
+  //     }
+  //     case "DECREMENT_QTY": {
+  //       console.log(action.payload);
+  //       let updatedlist = state.cart_products.map((item) => {
+  //         if (
+  //           (item.cart_item.deal_title === action.payload ||
+  //             item.cart_item.product_title === action.payload) &&
+  //           item.Q > 1
+  //         ) {
+  //           item.Q = item.Q - 1;
+  //         }
+  //         return item;
+  //       });
 
-        return { ...state, cart_products: updatedlist };
-      }
-      case "INCREMENT_QTY": {
-        console.log(action.payload, "again");
+  //       return { ...state, cart_products: updatedlist };
+  //     }
+  //     case "INCREMENT_QTY": {
+  //       console.log(action.payload, "again");
 
-        let updatedlist = cartItems?.map((item) => {
-          return item?.cart_products.map((prod) => {
-            console.log(prod);
-            if (
-              prod.cart_item.deal_title === action.payload ||
-              prod.cart_item.product_title === action.payload
-            ) {
-              console.log("Aniket");
-              prod.Q = prod.Q + 1;
-            }
-            return prod;
-          });
-        });
-        setCartItems(updatedlist);
+  //       let updatedlist = cartItems?.map((item) => {
+  //         return item?.cart_products.map((prod) => {
+  //           console.log(prod);
+  //           if (
+  //             prod.cart_item.deal_title === action.payload ||
+  //             prod.cart_item.product_title === action.payload
+  //           ) {
+  //             console.log("Aniket");
+  //             prod.Q = prod.Q + 1;
+  //           }
+  //           return prod;
+  //         });
+  //       });
+  //       setCartItems(updatedlist);
 
-        console.log(updatedlist);
-        return { cart_products: updatedlist };
-      }
-      case "reset": {
-        console.log("reset");
-        return {
-          cart_products: [],
-        };
-      }
-      case "DATA_FIRESTORE": {
-        return { cart_products: action.payload };
-      }
-      // case "DATA_FIRESTORE": {
-      //   return {
-      //     ...state,
-      //     cart_products: [...state.cart_products, action.payload],
-      //   };
-      // }
-    }
-  }
-  const [state, dispatch] = useReducer(reducerfn, {
-    cart_products: [],
-  });
+  //       console.log(updatedlist);
+  //       return { cart_products: updatedlist };
+  //     }
+  //     case "reset": {
+  //       console.log("reset");
+  //       return {
+  //         cart_products: [],
+  //       };
+  //     }
+  //     case "DATA_FIRESTORE": {
+  //       return { cart_products: action.payload };
+  //     }
+  //     // case "DATA_FIRESTORE": {
+  //     //   return {
+  //     //     ...state,
+  //     //     cart_products: [...state.cart_products, action.payload],
+  //     //   };
+  //     // }
+  //   }
+  // }
+  // const [state, dispatch] = useReducer(reducerfn, {
+  //   cart_products: [],
+  // });
   async function deleteUserCollection(uid) {
     try {
       // Create a reference to the user's collection
@@ -121,25 +122,26 @@ function Context(props) {
 
   useEffect(() => {
     const handleUserData = async () => {
-      console.log(state);
+      // console.log(state);
       if (uid) {
-        setCartItems((prev) => {
-          console.log(prev);
-          return [...prev, state];
-        });
-        let updata = [...cartItems, state];
+        // setCartItems((prev) => {
+        //   console.log(prev);
+        //   return [...prev, state];
+        // });
+        // let updata = [...cartItems, state];
+
         await deleteUserCollection(uid);
-        await storeUserData(uid, { updata });
+        await storeUserData(uid, { cartItems });
         // setCartItems(state)
 
-        dispatch({ type: "reset" });
+        // dispatch({ type: "reset" });
       }
     };
-    if (uid && state.cart_products.length !== 0) {
-      handleUserData();
-      console.log(state);
-    }
-  }, [state, uid]);
+    handleUserData();
+    // if (uid && state.cart_products.length !== 0) {
+    //   console.log(state);
+    // }
+  }, [cartItems, uid]);
   const [deals, setDeals] = useState([]);
   return (
     <Mycontext.Provider
@@ -148,8 +150,10 @@ function Context(props) {
         setProducts,
         deals,
         setDeals,
-        state,
-        dispatch,
+        // state,
+        // dispatch,
+        loading,
+        setLoading,
         prodDetail,
         setProdDetail,
         uid,
