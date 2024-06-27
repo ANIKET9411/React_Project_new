@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 function Dealcard(props) {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
-  const { dispatch, setProdDetail, uid, setCartItems, cartItems, setLoading } =
+  const { setProdDetail, setCartItems, cartItems, setLoading } =
     useContext(Mycontext);
   async function getproductdetails(id, str = "add") {
     const options = {
@@ -19,7 +19,7 @@ function Dealcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "9cad704f23mshc671070439c9840p194925jsn63e13027751e",
+        "x-rapidapi-key": "e353719877mshd97a09f04ec3ce7p187ac9jsn270342f3e105",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };

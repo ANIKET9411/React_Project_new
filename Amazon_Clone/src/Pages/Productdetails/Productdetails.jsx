@@ -50,14 +50,16 @@ function Productdetails() {
                   navigate("/signin");
               toast.success("Successfully added to the cart");
             }}
-            className="rounded-3xl mx-auto p-2 bg-yellow-400"
+            className="rounded-3xl mx-auto p-2 bg-yellow-400 my-5"
           >
             ADD TO CART
           </button>
         </div>
         <div className="w-3/5 p-8">
           <h1 className="font-semibold text-3xl">{prodDetail.product_title}</h1>
-          <p className="text-4xl font-bold my-3">${prodDetail.product_price}</p>
+          <p className="text-4xl font-bold my-3">
+            Rs.{(prodDetail.product_price * 81).toFixed(2)}
+          </p>
           <div className="flex items-center rounded-3xl bg-green-500 w-20 px-2 py-1">
             <span className="text-2xl inline mr-2">
               {prodDetail.product_star_rating}
