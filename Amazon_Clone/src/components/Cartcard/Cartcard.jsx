@@ -21,14 +21,11 @@ function Cartcard(props) {
     );
   }, 0);
   console.log(summ);
-  setSum(summ);
+  setSum(summ.toFixed(2));
 
   function decrementqty(title) {
     let updateitem = cartItems.map((item) => {
-      if (
-        (item?.newdata?.deal_title ?? item?.newdata?.product_title === title) &&
-        item.Q > 1
-      ) {
+      if (item?.newdata?.product_title === title && item.Q > 1) {
         item.Q = item.Q - 1;
       }
       return item;
@@ -63,12 +60,12 @@ function Cartcard(props) {
       <div className="flex items-center justify-center border-black border-solid border-4 mx-auto my-3">
         <img
           className="m-3"
-          src={newdata?.deal_photo ?? newdata?.product_photo}
+          src={newdata?.product_photo}
           width={150}
           height={100}
         />
         <div className="w-1/2 m-3">
-          <h1>{newdata?.deal_title ?? newdata?.product_title}</h1>
+          <h1>{newdata?.product_title}</h1>
           <div className="flex w-1/5 justify-between m-6">
             <button
               // disabled={item.cart_item?.Q > 1 ? false : true}
@@ -77,7 +74,7 @@ function Cartcard(props) {
                 //   type: "DECREMENT_QTY",
                 //   payload: cart_item?.deal_title ?? cart_item?.product_title,
                 // });
-                decrementqty(newdata?.deal_title ?? newdata?.product_title);
+                decrementqty(newdata?.product_title);
               }}
             >
               -
@@ -89,7 +86,7 @@ function Cartcard(props) {
                 //   type: "INCREMENT_QTY",
                 //   payload: cart_item?.deal_title ?? cart_item?.product_title,
                 // });
-                incrementqty(newdata?.deal_title ?? newdata?.product_title);
+                incrementqty(newdata?.product_title);
               }}
             >
               +
@@ -97,14 +94,17 @@ function Cartcard(props) {
           </div>
           <div
             onClick={() => {
-              deleteproduct(newdata?.deal_title ?? newdata?.product_title);
+              deleteproduct(newdata?.product_title);
             }}
           >
             Delete
           </div>
         </div>
         <div className="text-2xl font-bold">
-          Rs.{newdata?.product_price?.replace(/[^0-9.]/g, "") * Q * 81}
+          Rs.
+          {(newdata?.product_price?.replace(/[^0-9.]/g, "") * Q * 81).toFixed(
+            2
+          )}
         </div>
       </div>
     </>

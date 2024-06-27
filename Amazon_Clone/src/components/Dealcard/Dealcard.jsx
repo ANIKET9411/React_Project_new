@@ -76,8 +76,8 @@ function Dealcard(props) {
     >
       <img src={props.value?.deal_photo} alt="" className="h-48" />
       <h1></h1>
-      <p>{props.value?.deal_title}</p>
-      <h2 className="font-bold text-2xl">${props.value?.deal_price?.amount}</h2>
+      <p className="h-24 overflow-scroll">{props.value?.deal_title}</p>
+      {/* <h2 className="font-bold text-2xl">${props.value?.deal_price?.amount}</h2> */}
 
       <div className="flex justify-between mt-8">
         <button
