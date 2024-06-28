@@ -4,13 +4,14 @@ import Cartcard from "../../components/Cartcard/Cartcard";
 import Layout from "../../components/Layout/Layout";
 import { useContext, useEffect, useState } from "react";
 import { getMultipleDocs } from "../../Api";
-import RazorpayPayment from "../../components/RazorpayPayment";
+// import RazorpayPayment from "../../components/RazorpayPayment";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const { uid, cartItems, setCartItems, setSum, sum, tItems } =
     useContext(Mycontext);
   // console.log(tItems);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (uid) {
       getMultipleDocs(uid).then((data) => {
@@ -32,15 +33,12 @@ function Cart() {
               <h1 className="text-2xl mx-8 mb-4 font-bold">Product details</h1>
               {cartItems?.map((item, index) => {
                 console.log(item);
-                // return item?.cart_products?.map((prod) => {
-                //   console.log(prod);
-                // console.log()
+
                 return <Cartcard key={index} val={item} />;
-                // });
               })}
             </div>
           ) : (
-            <div className=" text-center text-4xl font-extrabold">
+            <div className=" text-center text-4xl font-extrabold p-20">
               Your cart is empty.
             </div>
           )}
@@ -52,7 +50,11 @@ function Cart() {
               Price details({tItems} items)
             </h1>
             <h1 className="font-extrabold">Total Price: INR {sum}</h1>
-            <RazorpayPayment />
+            {/* <RazorpayPayment />
+            < */}
+            <button onClick={() => navigate("/Buypage")}>
+              Click to Checkout
+            </button>
           </div>
         )}
       </div>

@@ -9,8 +9,7 @@ import { toast } from "react-toastify";
 function Productdetails() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const { prodDetail, dispatch, cartItems, setCartItems } =
-    useContext(Mycontext);
+  const { prodDetail, cartItems, setCartItems } = useContext(Mycontext);
   console.log(prodDetail);
   let keylist = Object.keys(prodDetail.product_details);
   console.log(keylist);
@@ -28,10 +27,10 @@ function Productdetails() {
       });
       !match &&
         setCartItems((prev) => {
-          return [...prev, { newdata, Q: 1 }];
+          return [...prev, { newdata, Q: 1, isSelected: true }];
         });
     } else {
-      setCartItems([{ newdata, Q: 1 }]);
+      setCartItems([{ newdata, Q: 1, isSelected: true }]);
       console.log("first");
     }
   }
@@ -58,7 +57,8 @@ function Productdetails() {
         <div className="w-3/5 p-8">
           <h1 className="font-semibold text-3xl">{prodDetail.product_title}</h1>
           <p className="text-4xl font-bold my-3">
-            Rs.{(prodDetail.product_price * 81).toFixed(2)}
+            Rs.
+            {(prodDetail.product_price.replace(/[^0-9.]/g, "") * 81).toFixed(2)}
           </p>
           <div className="flex items-center rounded-3xl bg-green-500 w-20 px-2 py-1">
             <span className="text-2xl inline mr-2">
@@ -92,11 +92,18 @@ function Productdetails() {
                   <div
                     className="h-4 bg-yellow-500"
                     style={{
-                      width: `${prodDetail.rating_distribution[rlist]}`,
+                      width: `${prodDetail.rating_distribution[rlist].replace(
+                        /[^0-9.]/g,
+                        ""
+                      )}%`,
                     }}
                   ></div>
                   <p className="ml-5">
-                    {prodDetail.rating_distribution[rlist]}
+                    {prodDetail.rating_distribution[rlist].replace(
+                      /[^0-9.]/g,
+                      ""
+                    )}
+                    %
                   </p>
                 </div>
               </p>

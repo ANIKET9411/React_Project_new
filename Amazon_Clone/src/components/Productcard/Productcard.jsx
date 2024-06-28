@@ -64,10 +64,10 @@ function Productcard(props) {
       });
       !match &&
         setCartItems((prev) => {
-          return [...prev, { newdata, Q: 1 }];
+          return [...prev, { newdata, Q: 1, isSelected: true }];
         });
     } else {
-      setCartItems([{ newdata, Q: 1 }]);
+      setCartItems([{ newdata, Q: 1, isSelected: true }]);
       console.log("first");
     }
   }
@@ -82,9 +82,13 @@ function Productcard(props) {
           }}
         >
           <img src={props.value.product_photo} alt="" className="h-48" />
-          <h1>{}</h1>
-          <p>{props.value.product_title}</p>
-          <p>{props.value.product_price}</p>
+
+          <p className="h-12 overflow-scroll">{props.value.product_title}</p>
+          <p>
+            {(props.value.product_price?.replace(/[^0-9.]/g, "") * 81).toFixed(
+              2
+            )}
+          </p>
           <button
             onClick={(e) => {
               e.stopPropagation();

@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 
 const RazorpayPayment = () => {
-  const { sum, setOItem, cartItems, dispatch, uid } = useContext(Mycontext);
+  const { sum, setOItem, cartItems, setCartItems, uid } = useContext(Mycontext);
   async function deleteUserCollection(uid, str) {
     try {
       // Create a reference to the user's collection
@@ -72,6 +72,7 @@ const RazorpayPayment = () => {
           await deleteUserCollection(uid, "cartdata");
           await storeUserData(uid, cartItems);
           await deleteUserCollection(uid, "orderdata");
+          setCartItems([]);
           // dispatch({ type: "reset" });
         }
 

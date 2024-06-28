@@ -15,11 +15,9 @@ const Header = () => {
   console.log(currentUser);
   const navigate = useNavigate();
   const [searchval, setSearchval] = useState();
-  const { setProducts, state, setuid, cartItems } = useContext(Mycontext);
-  // useEffect(() => {
-  //   setuid(currentUser.uid);
-  // }, []);
-  // currentUser;
+  const { setProducts, setuid, cartItems, loading, setLoading } =
+    useContext(Mycontext);
+
   currentUser && setuid(currentUser?.uid);
   // get product through search
   async function getproductsearch(val) {
@@ -40,11 +38,14 @@ const Header = () => {
     };
 
     try {
+      setLoading(true);
       const response = await axios.request(options);
       console.log(response.data);
       setProducts(response.data.data.products);
       navigate("/allproduct");
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   }

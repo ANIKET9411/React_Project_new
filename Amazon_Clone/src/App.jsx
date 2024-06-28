@@ -14,6 +14,7 @@ import SignupPage from "./Pages/SignupPage/SignupPage";
 // import BuyNow from "./Pages/BuyNow/BuyNow";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/allproduct" element={<Allproducts />} />
             <Route path="/productdetails" element={<Productdetails />} />
             <Route path="/signin" element={<SignupPage />} />
+            <Route path="/Buypage" element={<CheckoutPage />} />
           </Routes>
         </BrowserRouter>
         <ToastContainer />
