@@ -9,7 +9,7 @@ import { getAuth } from "firebase/auth";
 import Productcard from "../../components/Productcard/Productcard";
 import { RotatingLines } from "react-loader-spinner";
 const auth = getAuth(app);
-console.log(auth.currentUser?.uid);
+console.log(auth?.currentUser?.uid);
 import React from "react";
 import { getMultipleDocs } from "../../Api";
 
@@ -29,7 +29,7 @@ function Home() {
         discount_range: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "e353719877mshd97a09f04ec3ce7p187ac9jsn270342f3e105",
+        "x-rapidapi-key": "1a7180c6f0msh53bc9e75d976a35p14c5a6jsn85724aba0092",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };

@@ -22,6 +22,13 @@ function Cart() {
     }
   }, [uid]);
 
+  let t_items = cartItems
+    .filter((item) => item.isSelected === true)
+    .reduce((acc, cv) => {
+      return acc + cv.Q;
+    }, 0);
+  console.log(t_items);
+
   return (
     <Layout>
       <h1 className="text-3xl font-bold mx-20 my-5">Shopping Cart</h1>
@@ -45,14 +52,17 @@ function Cart() {
         </div>
 
         {cartItems?.length > 0 && (
-          <div className="m-16 p-2 border-black border-solid border-4 w-60 h-40">
+          <div className="m-16 p-2 border-black border-solid border-4 w-1/3  h-40">
             <h1 className="font-semibold text-xl">
-              Price details({tItems} items)
+              Price details({t_items} items)
             </h1>
             <h1 className="font-extrabold">Total Price: INR {sum}</h1>
             {/* <RazorpayPayment />
             < */}
-            <button onClick={() => navigate("/Buypage")}>
+            <button
+              onClick={() => navigate("/Checkout")}
+              className="rounded-3xl mx-auto p-2 bg-yellow-400 mt-4 "
+            >
               Click to Checkout
             </button>
           </div>

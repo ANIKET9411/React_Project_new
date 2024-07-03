@@ -2,16 +2,11 @@ import { useContext } from "react";
 import { Mycontext } from "../../Context";
 function Cartcard(props) {
   console.log(props);
-  const { setSum, settItems, cartItems, setCartItems } = useContext(Mycontext);
+  const { setSum, cartItems, setCartItems } = useContext(Mycontext);
   const { val } = props;
   console.log(val);
   const { Q, isSelected, newdata } = val;
   console.log(newdata, Q);
-  let t_items = cartItems.reduce((acc, cv) => {
-    return acc + cv.Q;
-  }, 0);
-  console.log(t_items);
-  settItems(t_items);
   let summ = cartItems
     .filter((item) => item.isSelected === true)
     .reduce((acc, cv) => {
@@ -108,7 +103,7 @@ function Cartcard(props) {
           onClick={() => {
             deleteproduct(newdata?.product_title);
           }}
-          className="rounded-3xl  p-2 bg-yellow-400 w-16"
+          className="rounded-3xl  p-2 bg-yellow-400 w-16 hover:cursor-pointer"
         >
           Delete
         </div>

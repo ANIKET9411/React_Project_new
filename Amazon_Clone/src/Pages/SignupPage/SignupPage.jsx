@@ -10,9 +10,10 @@ import { Mycontext } from "../../Context";
 import { useAuth } from "../../Context/AuthContext";
 import { auth } from "../../Config";
 import Header from "../../components/Header/Header";
+import { getMultipleDocs } from "../../Api";
 
 function SignupPage() {
-  const { setuid, dispatch } = useContext(Mycontext);
+  const { setuid, dispatch, uid, setCartItems } = useContext(Mycontext);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -23,6 +24,10 @@ function SignupPage() {
   const { currentUser } = useAuth();
   useEffect(() => {
     setuid(currentUser?.uid);
+    getMultipleDocs(uid).then((data) => {
+      console.log(data);
+      setCartItems(data);
+    });
   }, []);
   const handleSignUp = async (e) => {
     e.preventDefault();

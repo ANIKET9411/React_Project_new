@@ -15,6 +15,7 @@ import SignupPage from "./Pages/SignupPage/SignupPage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
+import RazorpayPayment from "./components/RazorpayPayment";
 
 function App() {
   return (
@@ -29,7 +30,8 @@ function App() {
             <Route path="/allproduct" element={<Allproducts />} />
             <Route path="/productdetails" element={<Productdetails />} />
             <Route path="/signin" element={<SignupPage />} />
-            <Route path="/Buypage" element={<CheckoutPage />} />
+            <Route path="/Checkout" element={<CheckoutPage />} />
+            <Route path="/Payment" element={<RazorpayPayment />} />
           </Routes>
         </BrowserRouter>
         <ToastContainer />

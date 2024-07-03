@@ -19,7 +19,7 @@ function Dealcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "e353719877mshd97a09f04ec3ce7p187ac9jsn270342f3e105",
+        "x-rapidapi-key": "1a7180c6f0msh53bc9e75d976a35p14c5a6jsn85724aba0092",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };

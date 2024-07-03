@@ -1,5 +1,5 @@
 // src/components/RazorpayPayment.js
-import React, { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Mycontext } from "../Context";
 import {
   addDoc,
@@ -9,8 +9,11 @@ import {
   getFirestore,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
+import PaymentSummary from "./PaymentSummary";
+import { useNavigate } from "react-router-dom";
 
 const RazorpayPayment = () => {
+  const navigate = useNavigate();
   const { sum, setOItem, cartItems, setCartItems, uid } = useContext(Mycontext);
   async function deleteUserCollection(uid, str) {
     try {
@@ -58,29 +61,30 @@ const RazorpayPayment = () => {
       currency: "INR",
       name: "Amazon",
       description: "Test Transaction",
-      image: "https://example.com/your_logo", // Replace with your logo URL or leave empty if not used
+      image: "https://purepng.com/public/uploads/large/amazon-logo-s3f.png", // Replace with your logo URL or leave empty if not used
       handler: async function (response) {
-        // Handle successful payment
-        // alert(
-        //   `Payment successful! Payment ID: ${response.razorpay_payment_id}`
-        // );
         toast.success(
           `Payment successful! Payment ID: ${response.razorpay_payment_id}`
         );
         {
-          setOItem(cartItems);
+          setOItem(cartItems.filter((item) => item.isSelected === true));
           await deleteUserCollection(uid, "cartdata");
-          await storeUserData(uid, cartItems);
+          await storeUserData(
+            uid,
+            cartItems.filter((item) => item.isSelected === true)
+          );
           await deleteUserCollection(uid, "orderdata");
-          setCartItems([]);
-          // dispatch({ type: "reset" });
+          setCartItems((prev) => {
+            return prev.filter((item) => item.isSelected === false);
+          });
+          navigate("/");
         }
 
         // You can also make a call to your backend to validate the payment and store payment details
       },
       prefill: {
         name: "John Doe",
-        email: "john.doe@example.com",
+        email: "aniketjauhri2003@gmail.com",
         contact: "9411839701",
       },
       notes: {
@@ -95,16 +99,20 @@ const RazorpayPayment = () => {
     rzp1.on("payment.failed", function (response) {
       // alert(`Payment failed! Reason: ${response.error.reason}`);
       toast.error(`Payment failed! Reason: ${response.error.reason}`);
+      navigate("/cart");
     });
 
     rzp1.open();
   };
-
+  useEffect(() => {
+    handlePayment();
+  }, []);
   return (
-    <div className="text-right mr-52">
+    <div className="text-right">
+      <PaymentSummary />
       <button
         onClick={handlePayment}
-        className="rounded-3xl p-2 w-32 bg-yellow-400"
+        className="rounded-3xl p-2 w-32 bg-yellow-400 mr-10"
       >
         Proceed to Pay
       </button>

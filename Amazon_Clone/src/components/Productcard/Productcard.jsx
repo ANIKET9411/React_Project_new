@@ -4,7 +4,6 @@ import { Mycontext } from "../../Context";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
-import { RotatingLines } from "react-loader-spinner";
 
 function Productcard(props) {
   const { currentUser } = useAuth();
@@ -12,11 +11,10 @@ function Productcard(props) {
   // console.log(props);
   const navigate = useNavigate();
   const {
-    dispatch,
     setProdDetail,
     cartItems,
     setCartItems,
-    loading,
+
     setLoading,
   } = useContext(Mycontext);
 
@@ -29,7 +27,7 @@ function Productcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "e353719877mshd97a09f04ec3ce7p187ac9jsn270342f3e105",
+        "x-rapidapi-key": "1a7180c6f0msh53bc9e75d976a35p14c5a6jsn85724aba0092",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
