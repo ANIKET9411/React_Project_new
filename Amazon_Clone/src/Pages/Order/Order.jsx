@@ -51,32 +51,41 @@ function Order() {
             // return item.map((it) => {
             // console.log(it);
             // return it.cart_products.map((clist) => {
-            let value = item.Odata?.data[0].newdata;
+            // let value = item.Odata?.data[0].newdata;
+            // console.log(value);
+            return item.Odata?.data.map((req) => {
+              let value = req?.newdata;
+              return (
+                <div
+                  className="flex items-center justify-center border-black border-solid border-4 mx-auto my-3 w-5/6"
+                  key={value?.product_title}
+                >
+                  {/* {item?.cart_item?.product_title} */}
 
-            return (
-              <div
-                className="flex items-center justify-center border-black border-solid border-4 mx-auto my-3 w-5/6"
-                key={value?.product_title}
-              >
-                {/* {item?.cart_item?.product_title} */}
-
-                <img
-                  className="m-3"
-                  src={value?.product_photo}
-                  width={150}
-                  height={100}
-                />
-                <div className="w-1/2 m-3">
-                  <h1>{value?.product_title}</h1>
-                  <div className="flex w-1/5 justify-between m-6">
-                    <h2>Qty:{item.Odata?.data[0].Q}</h2>
+                  <img
+                    className="m-3"
+                    src={value?.product_photo}
+                    width={150}
+                    height={100}
+                  />
+                  <div className="w-1/2 m-3">
+                    <h1>{value?.product_title}</h1>
+                    <div className="flex w-1/5 justify-between m-6">
+                      <h2>Qty:{item.Odata?.data[0].Q}</h2>
+                    </div>
                   </div>
+                  <div className="text-2xl font-bold">
+                    Rs.
+                    {(
+                      value?.product_price.replace(/[^0-9.]/g, "") *
+                      req.Q *
+                      81
+                    ).toFixed(2)}
+                  </div>
+                  {/* (newdata?.product_price?.replace(/[^0-9.]/g, "") * Q * 81).toFixed(2) */}
                 </div>
-                <div className="text-2xl font-bold">
-                  Rs.{value?.product_price * item.Odata?.data[0].Q * 81}
-                </div>
-              </div>
-            );
+              );
+            });
           })}
       </div>
     </Layout>

@@ -29,7 +29,7 @@ function Home() {
         discount_range: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "1a7180c6f0msh53bc9e75d976a35p14c5a6jsn85724aba0092",
+        "x-rapidapi-key": "f15b3a4cbamshaa52643b36734bfp12135bjsnd320635af0b5",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
