@@ -43,7 +43,7 @@ function Dealcard(props) {
 
   async function ADDTOCART(data) {
     let newdata = await getproductdetails(data.product_asin);
-    console.log(newdata);
+    console.log(newdata); 
 
     // console.log(ci.newdata.product_title);
 
