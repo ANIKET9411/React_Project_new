@@ -25,19 +25,19 @@ const Home_carousels = () => {
       reloadOnUpdate
       static
     >
-      <div className="carousel-cell" style={{ height: "300px" }}>
+      <div className="carousel-cell h-[100px] lg:h-[300px] md:h-[300px]">
         <img src={a1} alt="Slide 1" />
       </div>
-      <div className="carousel-cell" style={{ height: "300px" }}>
+      <div className="carousel-cell h-[100px] lg:h-[300px] md:h-[300px]">
         <img src={a2} alt="Slide 2" />
       </div>
-      <div className="carousel-cell" style={{ height: "300px" }}>
+      <div className="carousel-cell h-[100px] lg:h-[300px] md:h-[300px]">
         <img src={a3} alt="Slide 3" />
       </div>
-      <div className="carousel-cell" style={{ height: "300px" }}>
+      <div className="carousel-cell h-[100px] lg:h-[300px] md:h-[300px]">
         <img src={a4} alt="Slide 4" />
       </div>
-      <div className="carousel-cell" style={{ height: "300px" }}>
+      <div className="carousel-cell h-[100px] lg:h-[300px] md:h-[300px]">
         <img src={a5} alt="Slide 5" />
       </div>
     </Flickity>

@@ -27,7 +27,7 @@ function Productcard(props) {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "f15b3a4cbamshaa52643b36734bfp12135bjsnd320635af0b5",
+        "x-rapidapi-key": "62efb9b06amsh554fed0dbd41e24p14971bjsnad6cc8900dc8",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };

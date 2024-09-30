@@ -13,8 +13,8 @@ function Productdetails() {
   console.log(prodDetail);
   let keylist = Object.keys(prodDetail.product_details);
   console.log(keylist);
-  let ratinglist = Object.keys(prodDetail.rating_distribution);
-  console.log(ratinglist);
+  // let ratinglist = Object.keys(prodDetail.rating_distribution);
+  // console.log(ratinglist);
 
   function ADDTOCART(newdata) {
     console.log(newdata);
@@ -82,8 +82,8 @@ function Productdetails() {
             return <li key={prod}>{prod}</li>;
           })}
 
-          <h1 className="font-bold mt-4 text-xl">Product Ratings & Reviews</h1>
-          {ratinglist.map((rlist) => {
+          {/* <h1 className="font-bold mt-4 text-xl">Product Ratings & Reviews</h1> */}
+          {/* {ratinglist.map((rlist) => {
             return (
               <p key={rlist} className="flex">
                 <p className="font-bold">{rlist}</p>
@@ -108,7 +108,7 @@ function Productdetails() {
                 </div>
               </p>
             );
-          })}
+          })} */}
           <h1 className="font-bold mt-4 text-xl"> Customer Say</h1>
           <p>{prodDetail.customers_say}</p>
         </div>
