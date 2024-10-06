@@ -31,12 +31,11 @@ function Cart() {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mx-20 my-5">Shopping Cart</h1>
-      <div className="m-3 flex w-5/6 mx-auto">
+      <h1 className="text-3xl font-bold lg:mx-20 mx-10 my-5">Shopping Cart</h1>
+      <div className="m-3 flex flex-col lg:flex-row w-5/6 mx-auto">
         <div className="m-5 ">
-          {console.log(cartItems)}
           {cartItems?.length > 0 ? (
-            <div>
+            <div >
               <h1 className="text-2xl mx-8 mb-4 font-bold">Product details</h1>
               {cartItems?.map((item, index) => {
                 console.log(item);

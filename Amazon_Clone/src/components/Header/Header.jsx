@@ -34,7 +34,7 @@ const Header = () => {
         product_condition: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "your_api_key",
+        "x-rapidapi-key": "6260d7c39fmsh585af5f6767b7b4p1cdd87jsnb6c53e0de704",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };

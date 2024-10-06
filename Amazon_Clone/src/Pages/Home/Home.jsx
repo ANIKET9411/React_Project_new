@@ -42,7 +42,7 @@ function Home() {
         discount_range: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "ae1d78a41fmsh9899d0f9a032543p18ff35jsnca4aa0db0d6a",
+        "x-rapidapi-key": "6260d7c39fmsh585af5f6767b7b4p1cdd87jsnb6c53e0de704",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -69,7 +69,7 @@ function Home() {
         country: "US",
       },
       headers: {
-        "x-rapidapi-key": "ae1d78a41fmsh9899d0f9a032543p18ff35jsnca4aa0db0d6a",
+        "x-rapidapi-key": "6260d7c39fmsh585af5f6767b7b4p1cdd87jsnb6c53e0de704",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -97,7 +97,7 @@ function Home() {
         product_condition: "ALL",
       },
       headers: {
-        "x-rapidapi-key": "ae1d78a41fmsh9899d0f9a032543p18ff35jsnca4aa0db0d6a",
+        "x-rapidapi-key": "6260d7c39fmsh585af5f6767b7b4p1cdd87jsnb6c53e0de704",
         "x-rapidapi-host": "real-time-amazon-data.p.rapidapi.com",
       },
     };
@@ -148,7 +148,7 @@ function Home() {
           })}
         </div>
         <HomeShortcut3 />
-        <section className="flex p-2 overflow-scroll w-full">
+        {/* <section className="flex p-2 overflow-scroll w-full">
           {laptops.map((item, index) => {
             return (
               <section
@@ -158,18 +158,18 @@ function Home() {
                   getdetail(item.asin);
                 }}
               >
-                {/* <img
+                <img
                   src={item.product_photo}
                   alt=""
                   height="200px"
                   width="250px"
-                /> */}
-                {/* <h3>Great Indian Festival</h3>
-                <p>{item.product_title}</p> */}
+                />
+                <h3>Great Indian Festival</h3>
+                <p>{item.product_title}</p>
               </section>
             );
           })}
-        </section>
+        </section> */}
         <HomeShortcut4 />
       </div>
 

@@ -92,24 +92,24 @@ function HomeShortcut1() {
     },
   ];
   return (
-    <div className="flex flex-col lg:flex-row md:flex-row justify-between w-full  pb-4">
+    <div className="flex flex-col lg:flex-row sm:flex-row md:flex-row justify-between w-full flex-wrap pb-4">
       <Homemainprod
-        className="w-[20%] m-2"
+        className="w-[20%] sm:w-[45%] m-2"
         Data={prodData}
         title="Up to 75% off | Never before offers on appliances"
       />
       <Homemainprod
-        className="w-[20%] m-2"
+        className="w-[20%] sm:w-[45%] m-2"
         Data={prodData2}
         title="Minimum 50% off | Home, kitchen & more"
       />
       <Homemainprod
-        className="w-[20%] m-2"
+        className="w-[20%] sm:w-[45%] m-2"
         Data={prodData3}
         title="Starting ₹299 | Latest styles from top brands"
       />
       <Homemainprod
-        className="w-[20%] m-2"
+        className="w-[20%] sm:w-[45%] m-2"
         Data={prodData4}
         title="Minimum 60% off | Deals on Amazon brands & more"
       />

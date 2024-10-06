@@ -92,7 +92,7 @@ function HomeShortcut3() {
     },
   ];
   return (
-    <div className="flex flex-col lg:flex-row md:flex-row justify-between w-full  pb-4">
+    <div className="flex flex-col lg:flex-row md:flex-row sm:flex-row justify-between w-full flex-wrap  pb-4">
       <Homemainprod
         className="w-[20%] m-2 "
         Data={prodData}

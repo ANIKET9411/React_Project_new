@@ -3,7 +3,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { Mycontext } from "../../Context";
 function Homemainprod({ Data, title }) {
-  const { setProducts } = useContext(Mycontext);
+  const { setProducts, setLoading } = useContext(Mycontext);
   const navigate = useNavigate();
   //   console.log(Data, title);
   async function getproductsearch(val) {
@@ -24,26 +24,28 @@ function Homemainprod({ Data, title }) {
     };
 
     try {
+      setLoading(true);
       const response = await axios.request(options);
       //   console.log(response.data.data.products);
       setProducts(response.data.data.products);
       navigate("/allproduct");
+      setLoading(false);
     } catch (error) {
-      //   setLoading(false);
+      setLoading(false);
       console.error(error);
     }
   }
   return (
-    <div className="w-full lg:w-[24%] md:w-[24%] p-2 border bg-white">
-      <h1 className="text-xl font-bold m-2">{title}</h1>
-      <div className="flex justify-between flex-wrap">
+    <div className="w-full lg:w-[24%] md:w-[49%]  sm:w-[49%] p-2 border bg-white">
+      <h1 className="text-xl font-bold m-2 h-12">{title}</h1>
+      <div className="flex justify-between flex-wrap ">
         {Data.map((item) => {
           //   console.log(item);
 
           return (
             <div
               key={item.tagname}
-              className="w-[44%] m-2 cursor-pointer"
+              className="w-[42%] m-2 cursor-pointer"
               onClick={() => {
                 getproductsearch(item.name);
               }}
